@@ -1,0 +1,107 @@
+<view class="page-container">
+  <view class="header">
+    <text class="header-title">丽森互惠生</text>
+    <text class="header-subtitle">LiSen Au Pair</text>
+  </view>
+
+  <view class="search-bar">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="搜索姓名、国籍..."
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      confirm-type="search"
+      bindconfirm="onSearch"
+    />
+    <text wx:if="{{searchKeyword}}" class="search-clear" bindtap="clearSearch">×</text>
+  </view>
+
+  <swiper
+    class="banner-swiper"
+    indicator-dots="{{true}}"
+    indicator-color="rgba(255,255,255,0.5)"
+    indicator-active-color="#ffffff"
+    autoplay="{{true}}"
+    interval="{{3000}}"
+    duration="{{500}}"
+    circular="{{true}}"
+  >
+    <swiper-item wx:for="{{banners}}" wx:key="*this">
+      <image class="banner-image" src="{{item}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="function-grid">
+    <view
+      class="func-btn"
+      wx:for="{{functionBtns}}"
+      wx:key="label"
+      hover-class="func-btn-hover"
+      bindtap="onFuncBtnTap"
+      data-index="{{index}}"
+    >
+      <image class="func-icon" src="{{item.icon}}" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="section-divider"></view>
+
+  <view class="candidates-section">
+    <view class="section-title">互惠人选</view>
+
+    <view wx:if="{{loading}}" class="loading-container">
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <view wx:elif="{{!candidateList.length}}" class="empty-container">
+      <text class="empty-text">暂无人选数据</text>
+    </view>
+
+    <view wx:else class="candidate-list">
+      <view
+        class="candidate-card"
+        wx:for="{{candidateList}}"
+        wx:key="id"
+        bindtap="goToDetail"
+        data-id="{{item.id}}"
+        hover-class="card-hover"
+      >
+        <view class="card-header">
+          <view class="avatar-wrapper" style="background:{{item.avatarColor}}">
+            <text class="avatar-text">{{item.name[0]}}</text>
+          </view>
+          <view class="basic-info">
+            <view class="name-row">
+              <text class="candidate-name">{{item.nationality}} {{item.name}}</text>
+            </view>
+            <view class="info-row">
+              <text wx:if="{{item.age}}" class="info-tag">{{item.age}}岁</text>
+              <text wx:if="{{item.gender}}" class="info-tag">{{item.gender}}</text>
+              <text wx:if="{{item.longest_stay}}" class="info-tag duration-tag">{{item.longest_stay}}</text>
+            </view>
+          </view>
+          <view wx:if="{{item.aliyun_video_link}}" class="video-badge">
+            <text class="video-badge-icon">▶</text>
+          </view>
+        </view>
+
+        <view class="card-body" wx:if="{{item.self_description}}">
+          <text class="intro-text">{{item.self_description}}</text>
+        </view>
+
+        <view class="card-footer">
+          <text class="tag" wx:if="{{item.languageTags}}">{{item.languageTags}}</text>
+          <text wx:if="{{item.highest_degree}}" class="tag edu-tag">{{item.highest_degree}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{hasMore && !loading}}" class="load-more" bindtap="loadMore">
+      <text class="load-more-text">点击加载更多</text>
+    </view>
+    <view wx:if="{{!hasMore && candidateList.length > 0}}" class="no-more">
+      <text class="no-more-text">— 已经到底了 —</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,21 @@
+<view class="video-container">
+  <video
+    wx:if="{{videoUrl}}"
+    class="video-player"
+    src="{{videoUrl}}"
+    controls="{{true}}"
+    autoplay="{{true}}"
+    show-center-play-btn="{{true}}"
+    enable-progress-gesture="{{true}}"
+    object-fit="contain"
+    binderror="onVideoError"
+    bindplay="onVideoPlay"
+    initial-time="0"
+  ></video>
+  <view wx:else class="no-video">
+    <text class="no-video-text">暂无视频</text>
+  </view>
+  <view class="video-tips" wx:if="{{videoUrl}}">
+    <text>点击播放按钮开始播放</text>
+  </view>
+</view>

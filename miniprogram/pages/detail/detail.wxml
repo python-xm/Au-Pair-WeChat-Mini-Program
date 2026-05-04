@@ -1,0 +1,355 @@
+<view class="page-container" wx:if="{{!loading}}">
+  <view class="header-section">
+    <view class="avatar-large-wrapper" style="background:{{candidate.avatarColor}}">
+      <text class="avatar-large-text">{{candidate.name[0]}}</text>
+    </view>
+    <view class="name-section">
+      <text class="candidate-name">{{candidate.name}}</text>
+      <view class="meta-row">
+        <text class="meta-item" wx:if="{{age}}">{{age}}岁</text>
+        <text class="meta-dot" wx:if="{{age}}">·</text>
+        <text class="meta-item" wx:if="{{candidate.gender}}">{{candidate.gender}}</text>
+        <text class="meta-dot" wx:if="{{candidate.gender}}">·</text>
+        <text class="meta-item" wx:if="{{candidate.nationality}}">{{candidate.nationality}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{candidate.aliyun_video_link}}" class="video-section" bindtap="playVideo">
+    <view class="video-cover">
+      <view class="play-btn">
+        <text class="play-icon">▶</text>
+      </view>
+      <text class="video-tip">点击预览视频</text>
+    </view>
+  </view>
+
+  <view class="info-cards">
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">📋</text>
+        <text>基本信息</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.nationality}}">
+          <text class="info-label">国籍</text>
+          <text class="info-value">{{candidate.nationality}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.marital_status}}">
+          <text class="info-label">婚姻状况</text>
+          <text class="info-value">{{candidate.marital_status}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.height}}">
+          <text class="info-label">身高</text>
+          <text class="info-value">{{candidate.height}}cm</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.weight}}">
+          <text class="info-label">体重</text>
+          <text class="info-value">{{candidate.weight}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.religion}}">
+          <text class="info-label">宗教信仰</text>
+          <text class="info-value">{{candidate.religion}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.smoke}}">
+          <text class="info-label">是否吸烟</text>
+          <text class="info-value">{{candidate.smoke}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">👨‍👩‍👧</text>
+        <text>家庭背景</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.father_occupation}}">
+          <text class="info-label">父亲职业</text>
+          <text class="info-value">{{candidate.father_occupation}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.mother_occupation}}">
+          <text class="info-label">母亲职业</text>
+          <text class="info-value">{{candidate.mother_occupation}}</text>
+        </view>
+        <view class="info-item full-width" wx:if="{{candidate.siblings}}">
+          <text class="info-label">兄弟姐妹</text>
+          <text class="info-value">{{candidate.siblings}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">📅</text>
+        <text>行程信息</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.earliest_arrival_fmt}}">
+          <text class="info-label">最早到达</text>
+          <text class="info-value">{{candidate.earliest_arrival_fmt}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.latest_arrival_fmt}}">
+          <text class="info-label">最晚到达</text>
+          <text class="info-value">{{candidate.latest_arrival_fmt}}</text>
+        </view>
+        <view class="info-item full-width" wx:if="{{candidate.longest_stay}}">
+          <text class="info-label">最长停留</text>
+          <text class="info-value">{{candidate.longest_stay}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">🌍</text>
+        <text>语言能力</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.native_language}}">
+          <text class="info-label">母语</text>
+          <text class="info-value">{{candidate.native_language}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.chinese_level}}">
+          <text class="info-label">中文水平</text>
+          <text class="info-value highlight">{{candidate.chinese_level}}</text>
+        </view>
+        <view class="info-item full-width" wx:if="{{candidate.other_languages}}">
+          <text class="info-label">其他语言</text>
+          <text class="info-value">{{candidate.other_languages}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">🎓</text>
+        <text>教育背景</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.highest_degree}}">
+          <text class="info-label">最高学历</text>
+          <text class="info-value">{{candidate.highest_degree}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.degree_years}}">
+          <text class="info-label">学习年限</text>
+          <text class="info-value">{{candidate.degree_years}}</text>
+        </view>
+        <view class="info-item full-width" wx:if="{{candidate.other_certifications}}">
+          <text class="info-label">其他证书</text>
+          <text class="info-value">{{candidate.other_certifications}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">💼</text>
+        <text>工作经验</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.child_exp_yesno}}">
+        <text class="block-label">育儿经验</text>
+        <text class="block-content">{{candidate.child_exp_yesno}}{{candidate.child_exp_details ? '：' + candidate.child_exp_details : ''}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.other_work_exp}}">
+        <text class="block-label">其他工作经验</text>
+        <text class="block-content">{{candidate.other_work_exp}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.teach_english_yesno}}">
+        <text class="block-label">是否教英语</text>
+        <text class="block-content">{{candidate.teach_english_yesno}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.preferred_child_age}}">
+        <text class="block-label">偏好儿童年龄</text>
+        <text class="block-content">{{candidate.preferred_child_age}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">🎯</text>
+        <text>兴趣爱好</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.sports}}">
+        <text class="block-label">运动</text>
+        <text class="block-content">{{candidate.sports}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.instruments}}">
+        <text class="block-label">乐器</text>
+        <text class="block-content">{{candidate.instruments}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.other_hobbies}}">
+        <text class="block-label">其他爱好</text>
+        <text class="block-content">{{candidate.other_hobbies}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">🧒</text>
+        <text>育儿相关</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.handle_naughty}}">
+        <text class="block-label">如何处理调皮行为</text>
+        <text class="block-content">{{candidate.handle_naughty}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.handle_tantrum}}">
+        <text class="block-label">如何处理发脾气</text>
+        <text class="block-content">{{candidate.handle_tantrum}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.handle_dislike}}">
+        <text class="block-label">如何处理不喜欢的食物</text>
+        <text class="block-content">{{candidate.handle_dislike}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.handle_nonative}}">
+        <text class="block-label">非母语沟通方式</text>
+        <text class="block-content">{{candidate.handle_nonative}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.scenario_examples}}">
+        <text class="block-label">场景举例</text>
+        <text class="block-content">{{candidate.scenario_examples}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">🏥</text>
+        <text>健康信息</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.dietary_restrictions}}">
+          <text class="info-label">饮食限制</text>
+          <text class="info-value">{{candidate.dietary_restrictions}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.allergies_yesno}}">
+          <text class="info-label">过敏情况</text>
+          <text class="info-value">{{candidate.allergies_yesno}}</text>
+        </view>
+      </view>
+      <view class="info-block" wx:if="{{candidate.allergies_text}}">
+        <text class="block-label">过敏详情</text>
+        <text class="block-content">{{candidate.allergies_text}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.medications}}">
+        <text class="block-label">用药情况</text>
+        <text class="block-content">{{candidate.medications}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.dietary_yesno_text}}">
+        <text class="block-label">饮食说明</text>
+        <text class="block-content">{{candidate.dietary_yesno_text}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">
+        <text class="title-icon">✨</text>
+        <text>自我介绍</text>
+      </view>
+      <text class="intro-full-text" wx:if="{{candidate.self_description}}">{{candidate.self_description}}</text>
+      <text class="intro-full-text empty-hint" wx:else>暂未填写</text>
+    </view>
+
+    <view class="info-card" wx:if="{{candidate.why_china || candidate.expect_family || candidate.motivation_letter}}">
+      <view class="card-title">
+        <text class="title-icon">❤️</text>
+        <text>来华动机</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.why_china}}">
+        <text class="block-label">为什么选择中国</text>
+        <text class="block-content">{{candidate.why_china}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.expect_family}}">
+        <text class="block-label">期望家庭</text>
+        <text class="block-content">{{candidate.expect_family}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.motivation_letter}}">
+        <text class="block-label">动机信</text>
+        <text class="block-content">{{candidate.motivation_letter}}</text>
+      </view>
+    </view>
+
+    <view class="info-card" wx:if="{{candidate.city_preference || candidate.other_requirements || candidate.emergency_comments || candidate.live_alone_exp}}">
+      <view class="card-title">
+        <text class="title-icon">📝</text>
+        <text>其他信息</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.city_preference}}">
+        <text class="block-label">城市偏好</text>
+        <text class="block-content">{{candidate.city_preference}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.other_requirements}}">
+        <text class="block-label">其他要求</text>
+        <text class="block-content">{{candidate.other_requirements}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.live_alone_exp}}">
+        <text class="block-label">独居经历</text>
+        <text class="block-content">{{candidate.live_alone_exp}}</text>
+      </view>
+      <view class="info-block" wx:if="{{candidate.emergency_comments}}">
+        <text class="block-label">紧急备注</text>
+        <text class="block-content">{{candidate.emergency_comments}}</text>
+      </view>
+    </view>
+
+    <view class="info-card" wx:if="{{candidate.mobile || candidate.email || candidate.wechat}}">
+      <view class="card-title">
+        <text class="title-icon">📞</text>
+        <text>联系方式</text>
+      </view>
+      <view class="info-grid">
+        <view class="info-item" wx:if="{{candidate.mobile}}">
+          <text class="info-label">手机</text>
+          <text class="info-value highlight">{{candidate.mobile}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.email}}">
+          <text class="info-label">邮箱</text>
+          <text class="info-value highlight">{{candidate.email}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.wechat}}">
+          <text class="info-label">微信</text>
+          <text class="info-value">{{candidate.wechat}}</text>
+        </view>
+        <view class="info-item" wx:if="{{candidate.best_contact_time}}">
+          <text class="info-label">最佳联系时间</text>
+          <text class="info-value">{{candidate.best_contact_time}}</text>
+        </view>
+        <view class="info-item full-width" wx:if="{{candidate.social_media}}">
+          <text class="info-label">社交媒体</text>
+          <text class="info-value">{{candidate.social_media}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+
+  <view class="share-btn-wrap" bindtap="onShareTap">
+    <text class="share-icon">↗</text>
+    <text class="share-text">分享</text>
+    <button class="share-btn-hidden" open-type="share"></button>
+  </view>
+</view>
+
+<view wx:if="{{showVideo && candidate.aliyun_video_link}}" class="video-modal" bindtap="closeVideo">
+  <view class="video-modal-mask"></view>
+  <view class="video-modal-content" catchtap="">
+    <view class="video-modal-header">
+      <text class="video-modal-title">{{candidate.name}} 的视频</text>
+      <text class="video-modal-close" bindtap="closeVideo">✕</text>
+    </view>
+    <video
+      class="detail-video-player"
+      src="{{candidate.aliyun_video_link}}"
+      controls="{{true}}"
+      autoplay="{{true}}"
+      show-center-play-btn="{{true}}"
+      object-fit="contain"
+      binderror="onVideoError"
+      initial-time="0"
+    ></video>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="page-loading">
+  <text class="loading-text">加载中...</text>
+</view>

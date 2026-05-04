@@ -1,0 +1,79 @@
+<view class="page-container">
+  <view class="count-bar">
+    <text class="count-text">共 {{totalCount}} 位互惠生</text>
+  </view>
+
+  <view class="search-bar-small">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="搜索姓名、国籍..."
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      confirm-type="search"
+      bindconfirm="onSearch"
+    />
+    <text wx:if="{{searchKeyword}}" class="search-clear" bindtap="clearSearch">×</text>
+  </view>
+
+  <view wx:if="{{loading && !list.length}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <view wx:elif="{{!loading && !list.length}}" class="empty-container">
+    <text class="empty-emoji">📭</text>
+    <text class="empty-title">暂无互惠生数据</text>
+    <text class="empty-desc">请稍后再来查看</text>
+  </view>
+
+  <scroll-view
+    wx:else
+    scroll-y="{{true}}"
+    class="candidate-scroll"
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+    bindscrolltolower="loadMore"
+  >
+    <view class="candidate-list">
+      <view
+        class="candidate-card"
+        wx:for="{{list}}"
+        wx:key="id"
+        bindtap="goToDetail"
+        data-id="{{item.id}}"
+        hover-class="card-hover"
+      >
+        <view class="card-header">
+          <view class="avatar-wrapper" style="background:{{item.avatarColor}}">
+            <text class="avatar-text">{{item.name[0]}}</text>
+          </view>
+          <view class="basic-info">
+            <view class="name-row">
+              <text class="candidate-name">{{item.nationality}} {{item.name}}</text>
+            </view>
+            <view class="info-row">
+              <text wx:if="{{item.age}}" class="info-tag">{{item.age}}岁</text>
+              <text wx:if="{{item.gender}}" class="info-tag">{{item.gender}}</text>
+              <text wx:if="{{item.longest_stay}}" class="info-tag">{{item.longest_stay}}</text>
+            </view>
+          </view>
+          <view wx:if="{{item.aliyun_video_link}}" class="video-badge">
+            <text class="video-badge-icon">▶</text>
+          </view>
+        </view>
+
+        <view class="card-body" wx:if="{{item.self_description || item.languageTags}}">
+          <text wx:if="{{item.self_description}}" class="intro-text">{{item.self_description}}</text>
+          <view class="tag-row" wx:if="{{item.languageTags}}">
+            <text class="mini-tag">{{item.languageTags}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="load-status">
+      <text wx:if="{{loading && list.length > 0}}" class="status-text">加载中...</text>
+      <text wx:elif="{{!hasMore && list.length > pageSize}}" class="no-more-text">— 已经到底了 —</text>
+    </view>
+  </scroll-view>
+</view>
